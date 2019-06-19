@@ -30,6 +30,7 @@ ground_asd = ground.asd(100,50)
 ground_asd *= 1e-9/(2*np.pi*ground_asd.frequencies)
 
 diff = np.sqrt((suspoint_asd.value - ground_asd.value[0:801])**2)
+sum  = suspoint_asd.value + ground_asd.value[0:801]
 
 #%%
 plt.style.use('seaborn-whitegrid')
@@ -41,13 +42,17 @@ ax1.grid(which='both',axis='both',color='darkgrey',linestyle='dotted')
 
 ax1.plot(ground_asd,label='Ground (STS)')
 ax1.plot(suspoint_asd,label='Suspoint')
-ax1.plot(suspoint_asd.frequencies,diff,':',label='Differential')
+ax1.plot(suspoint_asd.frequencies,diff,'--',label='Differential')
+ax1.plot(suspoint_asd.frequencies,sum,'--',label='Sum')
 ax1.set_xlabel('Frequency (Hz)',fontsize=14,color='dimgrey')
 ax1.set_ylabel(r'$\rm{m}/\sqrt{\rm {Hz}}$',fontsize=14,color='dimgrey')
-ax1.set_xlim([0.01,2])
-ax1.set_ylim([5e-13,3e-5])
+ax1.set_xlim([0.01,8])
+ax1.set_ylim([2e-12,2e-6])
 ax1.set_xscale('log')
 ax1.set_yscale('log')
 ax1.set_title('Differential Motion Between Ground and ITMX Suspoint')
 
 ax1.legend(framealpha=0.1,frameon=True)
+f1.tight_layout(rect=[0,0,.99,1])
+
+
